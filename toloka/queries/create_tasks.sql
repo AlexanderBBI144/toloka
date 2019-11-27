@@ -16,6 +16,7 @@ WHERE
     (@camera IS NULL OR (@camera IS NOT NULL AND Camera = @camera)) AND
     Quality >= @min_quality;
 
+
 WITH ResultSet AS (
   SELECT DISTINCT * FROM (
     SELECT m.EventId1 EventId1, m.EventId2 EventId2, m.Confidence
@@ -31,32 +32,54 @@ WITH ResultSet AS (
       INNER HASH JOIN #Idx i2 WITH (nolock) ON i2.Id=m.EventId2
   ) rs
   WHERE EventId1 <> EventId2
+),
+
+RowNumber AS (
+  SELECT
+    EventId1,
+    EventId2,
+    Confidence,
+    ROW_NUMBER() OVER (PARTITION BY EventId1 ORDER BY Confidence DESC, EventId2) RN
+  FROM ResultSet
 )
 
-SELECT
-  EventId1,
-  EventId2,
-  Confidence,
-  ROW_NUMBER() OVER (PARTITION BY EventId1 ORDER BY Confidence DESC, EventId2) RN
-INTO #FullTaskMatrix
-FROM ResultSet
+SELECT DISTINCT
+  IIF(EventId1 > EventId2, EventId1, EventId2) EventId1,
+  IIF(EventId1 > EventId2, EventId2, EventId1) EventId2
+INTO #Pairs
+FROM RowNumber
+WHERE Confidence < @threshold AND RN <= @top_limit
+
+
+WITH ResultSet AS (
+  SELECT DISTINCT * FROM (
+    SELECT m.EventId1 EventId1, m.EventId2 EventId2, m.Confidence
+    FROM FFMatrix m
+      INNER HASH JOIN #Idx i1 WITH (nolock) ON i1.Id=m.EventId1
+    UNION ALL
+    SELECT m.EventId2 EventId1, m.EventId1 EventId2, m.Confidence
+    FROM FFMatrix m
+      INNER HASH JOIN #Idx i2 WITH (nolock) ON i2.Id=m.EventId2
+  ) rs
+  WHERE EventId1 <> EventId2
+),
+
+RowNumber AS (
+  SELECT
+    EventId1,
+    EventId2,
+    ROW_NUMBER() OVER (PARTITION BY EventId1 ORDER BY Confidence DESC, EventId2) RN
+  FROM ResultSet
+)
 
 SELECT
   EventId1,
   MAX(CASE WHEN RN = 1 THEN EventId2 END) EventId2,
   MAX(CASE WHEN RN = 2 THEN EventId2 END) EventId3
 INTO #Thumbs
-FROM #FullTaskMatrix
+FROM RowNumber
 GROUP BY EventId1
 ORDER BY EventId1
-
-
-SELECT DISTINCT
-  IIF(EventId1 > EventId2, EventId1, EventId2) EventId1,
-  IIF(EventId1 > EventId2, EventId2, EventId1) EventId2
-INTO #Pairs
-FROM #FullTaskMatrix
-WHERE Confidence < @threshold AND RN <= @top_limit
 
 
 SELECT
