@@ -66,6 +66,7 @@ async def main():
         FROM #ResultSet r
         GROUP BY EventId1
         ORDER BY EventId1
+
         SELECT DISTINCT
     		IIF(m.EventId1 > m.EventId2, m.EventId1, m.EventId2) EventId1,
     		IIF(m.EventId1 > m.EventId2, m.EventId2, m.EventId1) EventId2

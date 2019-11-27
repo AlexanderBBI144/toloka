@@ -5,7 +5,7 @@ from aiohttp import ClientSession, TCPConnector, ClientTimeout
 import simplejson as json
 
 from rest_api.requests import request
-import toloka.configs as configs
+import toloka
 
 def get_client_session(token):
     connector = TCPConnector()
@@ -16,7 +16,7 @@ def get_client_session(token):
 
 class TolokaMeta(type):
     def __init__(self, name, bases, attrs):
-        config = json.loads(read_text(configs, 'config.json'))
+        config = json.loads(read_text(toloka, 'config.json'))
         self.token = config['token']
         self.mode = config['mode']
         self.project_id = config['project_id']
