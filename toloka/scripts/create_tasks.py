@@ -11,7 +11,7 @@ from rest_api.db import select, execute_select
 import toloka.queries as queries
 from toloka.interface import Toloka
 from toloka.task import Task, TaskData
-from toloka.operation import Operation, types
+from toloka.operation import Operation
 
 
 DATE_START = '2019-09-12'
@@ -21,7 +21,7 @@ CONF = 0.8
 MIN_QUALITY = -1000
 TOP_LIMIT = 15
 
-
+#53682
 async def main():
     query = read_text(queries, 'create_tasks.sql')
     res, cols = select(query, DATE_START, DATE_END, CAMERA, CONF, MIN_QUALITY, TOP_LIMIT)

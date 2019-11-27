@@ -48,7 +48,7 @@ SELECT DISTINCT
   IIF(EventId1 > EventId2, EventId2, EventId1) EventId2
 INTO #Pairs
 FROM RowNumber
-WHERE Confidence < @threshold AND RN <= @top_limit
+WHERE Confidence < @threshold AND RN <= @top_limit;
 
 
 WITH ResultSet AS (
