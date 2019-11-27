@@ -7,20 +7,24 @@ from rest_api.requests import request
 from toloka.interface import Toloka
 
 
-POOL = SimpleNamespace(
-    OPEN = 'POOL.OPEN',
-    CLOSE = 'POOL.CLOSE',
-    ARCHIVE = 'POOL.ARCHIVE'
-),
-PROJECT = SimpleNamespace(ARCHIVE='PROJECT.ARCHIVE'),
-TASK_SUITE = SimpleNamespace(BATCH_CREATE='TASK_SUITE.BATCH_CREATE')
-PENDING = 'PENDING'
-RUNNING = 'RUNNING'
-SUCCESS = 'SUCCESS'
-FAIL = 'FAIL'
-
 # 61cd0956-caf4-4f32-aba1-b700b5022fba
 class Operation(Toloka):
+    endpoint = '/operations'
+    types = SimpleNamespace(
+        POOL = SimpleNamespace(
+            OPEN = 'POOL.OPEN',
+            CLOSE = 'POOL.CLOSE',
+            ARCHIVE = 'POOL.ARCHIVE'
+        ),
+        PROJECT = SimpleNamespace(ARCHIVE='PROJECT.ARCHIVE'),
+        TASK_SUITE = SimpleNamespace(BATCH_CREATE='TASK_SUITE.BATCH_CREATE'),
+        TASK = SimpleNamespace(BATCH_CREATE='TASK.BATCH_CREATE'),
+        PENDING = 'PENDING',
+        RUNNING = 'RUNNING',
+        SUCCESS = 'SUCCESS',
+        FAIL = 'FAIL'
+    )
+
     @classmethod
     async def list_operations(cls, type=None, status=None, limit=None, sort='-submitted',
                               id_gt=None, id_gte=None, id_lt=None, id_lte=None,
