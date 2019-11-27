@@ -1,0 +1,32 @@
+{
+  "id": "246756",
+  "project_id": "21500",
+  "private_name": "Разметка валидационного сета",
+  "may_contain_adult_content": false,
+  "will_expire": "2020-11-17T16:42:47.023",
+  "auto_close_after_complete_delay_seconds": 259200,
+  "reward_per_assignment": 0.01,
+  "assignment_max_duration_seconds": 1200,
+  "auto_accept_solutions": true,
+  "assignments_issuing_config": {
+    "issue_task_suites_in_creation_order": false
+  },
+  "mixer_config": {
+    "real_tasks_count": 500,
+    "golden_tasks_count": 0,
+    "training_tasks_count": 0,
+    "force_last_assignment": true
+  },
+  "defaults": {
+    "default_overlap_for_new_task_suites": 1,
+    "default_overlap_for_new_tasks": 3
+  },
+  "priority": 0,
+  "owner": {
+    "id": "b11341abe4e4a7dccb0123c56483b4c7",
+    "myself": true
+  },
+  "type": "REGULAR",
+  "status": "CLOSED",
+  "created": "2019-11-18T16:43:58.032"
+}
