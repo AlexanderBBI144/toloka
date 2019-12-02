@@ -10,9 +10,9 @@ from uuid import uuid4
 
 from rest_api.requests import request
 import toloka.configs as configs
-from toloka.interface import Toloka
-from toloka.quality import Config
-from toloka.task import TaskData
+from toloka.interface.toloka import Toloka
+from toloka.interface.quality import Config
+from toloka.interface.task import TaskData
 
 
 @dataclass_json

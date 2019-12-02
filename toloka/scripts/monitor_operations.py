@@ -9,9 +9,9 @@ from uuid import uuid4
 
 from rest_api.db import select, execute_select
 import toloka.queries as queries
-from toloka.interface import Toloka
-from toloka.task import Task, TaskData
-from toloka.operation import Operation
+from toloka.interface.toloka import Toloka
+from toloka.interface.task import Task, TaskData
+from toloka.interface.operation import Operation
 
 
 SUBMITTED_GT = "2019-11-27T13:00:00"

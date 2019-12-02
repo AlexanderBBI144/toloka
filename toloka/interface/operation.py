@@ -4,7 +4,7 @@ from types import SimpleNamespace
 from uuid import uuid4
 
 from rest_api.requests import request
-from toloka.interface import Toloka
+from toloka.interface.toloka import Toloka
 
 
 # 61cd0956-caf4-4f32-aba1-b700b5022fba

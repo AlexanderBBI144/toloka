@@ -9,7 +9,7 @@ from uuid import uuid4
 
 from rest_api.requests import request
 import toloka.configs as configs
-from toloka.interface import Toloka
+from toloka.interface.toloka import Toloka
 
 
 @dataclass_json

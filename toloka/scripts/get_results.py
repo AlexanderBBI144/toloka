@@ -10,9 +10,9 @@ from uuid import uuid4
 
 from rest_api.db import select, execute_select
 import toloka.queries as queries
-from toloka.interface import Toloka
-from toloka.assignments import Assignment
-from toloka.operation import Operation
+from toloka.interface.toloka import Toloka
+from toloka.interface.assignments import Assignment
+from toloka.interface.operation import Operation
 
 
 async def get_results(pool_id):

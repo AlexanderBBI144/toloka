@@ -10,8 +10,8 @@ from uuid import uuid4
 
 from rest_api.requests import request
 import toloka.configs as configs
-from toloka.interface import Toloka
-from toloka.quality import Config, QualityControl
+from toloka.interface.toloka import Toloka
+from toloka.interface.quality import Config, QualityControl
 
 
 @dataclass_json

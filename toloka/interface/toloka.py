@@ -6,6 +6,7 @@ import simplejson as json
 
 from rest_api.requests import request
 import toloka
+import toloka.configs as configs
 
 def get_client_session(token):
     connector = TCPConnector()
@@ -14,19 +15,24 @@ def get_client_session(token):
     return ClientSession(connector=connector, timeout=timeout, headers=headers)
 
 
+def initialize_toloka(self, mode=None):
+    config = json.loads(read_text(toloka, 'config.json'))
+    self.mode = config['mode'] if mode is None else mode
+    config = config[self.mode]
+    self.token = config['token']
+    self.project_id = config.get('project_id', None)
+    self.pool_id = config.get('pool_id', None)
+    if self.mode == 'sandbox':
+        self.host = 'https://sandbox.toloka.yandex.ru/api/v1'
+    elif self.mode == 'main':
+        self.host = 'https://toloka.yandex.ru/api/v1'
+    else:
+        raise AttributeError("Mode must be one of the following: 'sandbox', 'main'")
+
+
 class TolokaMeta(type):
     def __init__(self, name, bases, attrs):
-        config = json.loads(read_text(toloka, 'config.json'))
-        self.token = config['token']
-        self.mode = config['mode']
-        self.project_id = config['project_id']
-        self.pool_id = config['pool_id']
-        if self.mode == 'sandbox':
-            self.host = 'https://sandbox.toloka.yandex.ru/api/v1'
-        elif self.mode == 'main':
-            self.host = 'https://toloka.yandex.ru/api/v1'
-        else:
-            raise AttributeError("Mode must be one of the following: 'sandbox', 'main'")
+        initialize_toloka(self)
 
 
 class Toloka(metaclass=TolokaMeta):
@@ -93,6 +99,8 @@ class Toloka(metaclass=TolokaMeta):
         return await request(cls.session, 'get', url=url)
 
     @classmethod
-    def init_session(cls):
+    def init_session(cls, mode=None):
         cls.session = get_client_session(cls.token)
+        if mode is not None:
+            initialize_toloka(cls, mode)
         return cls.session
