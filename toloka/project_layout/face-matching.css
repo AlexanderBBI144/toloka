@@ -1,0 +1,108 @@
+@font-face {
+  font-family: 'YS Text';
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://yastatic.net/s3/home/fonts/ys/1/text-regular.woff2) format('woff2'), url(https://yastatic.net/s3/home/fonts/ys/1/text-regular.woff) format('woff');
+}
+@font-face {
+  font-family: 'YS Text';
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://yastatic.net/s3/home/fonts/ys/1/text-medium.woff2) format('woff2'), url(https://yastatic.net/s3/home/fonts/ys/1/text-medium.woff) format('woff');
+}
+@font-face {
+  font-family: 'YS Text';
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://yastatic.net/s3/home/fonts/ys/1/text-bold.woff2) format('woff2'), url(https://yastatic.net/s3/home/fonts/ys/1/text-bold.woff) format('woff');
+}
+
+.task-body {
+  font-family: 'YS Text';
+  font-feature-settings: 'liga', 'kern';
+  font-size: 14px;
+  color: #404040;
+}
+
+.top2 .img__container__imitation {
+  background-position: top;
+}
+
+.controls {
+  min-height: 50px;
+  width: 100%;
+  display:inline-block;
+}
+
+.field, .header1 {
+  display: inline-block;
+}
+
+.container {
+  display: grid;
+  height: calc(80% - 10px); /* auto */
+  width: 100%;
+  grid-gap: 5px;
+  justify-content: center;
+  grid-template-columns: repeat(4, 1fr) 1px repeat(4, 1fr);
+  grid-auto-rows: 30px 30px 1fr 30px 1fr;
+  grid-template-areas:
+      "h1  ...    ... ... vb h2 .. .. .."
+      "... hlt    hrt ... vb il il ir ir"
+      "... tl1    tr1 ... vb il il ir ir"
+      "hlm hlm    hrm hrm vb il il ir ir"
+      "tl2 tl3    tr2 tr3 vb il il ir ir";
+}
+
+.title {
+  background-color: #ffdb4d;
+  padding: 5px;
+  font-weight: 700;
+}
+
+.text-container {
+  display: table;
+  height: 100%;
+}
+
+.text {
+  display: table-cell;
+  vertical-align: bottom;
+  text-align: left;
+  font-weight: 400;
+}
+
+.photo1, .photo6 {
+  border: 3px solid green;
+}
+
+.vertical-border {
+  background-color: black;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+}
+
+.title1 { grid-area: h1 }
+.title2 { grid-area: h2 }
+.text-container-lt { grid-area: hlt }
+.text-container-rt { grid-area: hrt }
+.text-container-lm { grid-area: hlm }
+.text-container-rm { grid-area: hrm }
+.photo1 { grid-area: tl1 }
+.photo2 { grid-area: tl2 }
+.photo3 { grid-area: tl3 }
+.photo4 { grid-area: il }
+.photo5 { grid-area: ir }
+.photo6 { grid-area: tr1 }
+.photo7 { grid-area: tr2 }
+.photo8 { grid-area: tr3 }
+.vertical-border { grid-area: vb }

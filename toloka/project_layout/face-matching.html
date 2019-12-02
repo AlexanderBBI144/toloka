@@ -1,0 +1,52 @@
+<div class="task-body">
+  <div class="controls">
+    <div class="header1"><b>Принадлежат ли лица в зелёных рамках одному и тому же человеку?</b></div>
+    {{field type="radio" name="result" label="Один и тот же человек" value=true hotkey="1"}}
+    {{field type="radio" name="result" label="Разные люди" value=false hotkey="2"}}
+    {{field type="checkbox" name="doubt" label="Есть сомнения в правильности ответа" value=true hotkey="a"}}
+    {{field type="checkbox" name="error" label="Картинка не загружается" value=true hotkey="f"}}
+  </div>
+  <div class="data">
+    <div class="container">
+      <div class="title title1">Крупный план</div>
+      <div class="title title2">В полный рост</div>
+      <div class="text-container text-container-lt">
+        <span class="text">Лицо №1:</span>
+      </div>
+      <div class="text-container text-container-rt">
+        <span class="text">Лицо №2:</span>
+      </div>
+      <div class="text-container text-container-lm">
+        <span class="text">Топ похожих на лицо №1:</span>
+      </div>
+      <div class="text-container text-container-rm">
+        <span class="text">Топ похожих на лицо №2:</span>
+      </div>
+      <div class="vertical-border"></div>
+      <div class="photo photo1">
+        {{img src=(proxy (concat "/face-matching/faces/" thumb_left1)) align="top"}}
+      </div>
+      <div class="top2 photo2">
+        {{img src=(proxy (concat "/face-matching/faces/" thumb_left2))}}
+      </div>
+      <div class="top2 photo3">
+        {{img src=(proxy (concat "/face-matching/faces/" thumb_left3))}}
+      </div>
+      <div class="top2 photo4">
+        {{img src=(proxy (concat "/face-matching/frames/" image_left))}}
+      </div>
+      <div class="top2 photo5">
+        {{img src=(proxy (concat "/face-matching/frames/" image_right))}}
+      </div>
+      <div class="photo photo6">
+        {{img src=(proxy (concat "/face-matching/faces/" thumb_right1))}}
+      </div>
+      <div class="top2 photo7">
+        {{img src=(proxy (concat "/face-matching/faces/" thumb_right2))}}
+      </div>
+      <div class="top2 photo8">
+        {{img src=(proxy (concat "/face-matching/faces/" thumb_right3))}}
+      </div>
+    </div>
+  </div>
+ </div>
