@@ -1,23 +1,23 @@
 {
-  "project_id": "29723",
-  "private_name": "Реабилитация",
+  "project_id": "21500",
+  "private_name": "Тест боевой",
   "may_contain_adult_content": false,
   "will_expire": "2020-11-27T22:57:56.437",
   "reward_per_assignment": 0.01,
   "assignment_max_duration_seconds": 1800,
   "defaults": {
     "default_overlap_for_new_task_suites": 1,
-    "default_overlap_for_new_tasks": null
+    "default_overlap_for_new_tasks": 1
   },
   "private_comment": null,
   "public_description": null,
-  "auto_close_after_complete_delay_seconds": 0,
+  "auto_close_after_complete_delay_seconds": 300,
   "dynamic_pricing_config": null,
   "auto_accept_solutions": true,
   "assignments_issuing_config": {
     "issue_task_suites_in_creation_order": false
   },
-  "priority": 15,
+  "priority": 0,
   "filter": {
     "and": [
       {
@@ -71,22 +71,32 @@
     ]
   },
   "quality_control": {
-    "training_requirement": {
-      "training_pool_id": "8822978",
-      "training_passing_skill_value": 70
-    },
+    "training_requirement": null,
     "captcha_frequency": "LOW",
     "configs": null,
     "checkpoints_config": null
   },
   "dynamic_overlap_config": null,
-  "mixer_config": null,
-  "id": "8823054",
+  "mixer_config": {
+    "real_tasks_count": 2,
+    "golden_tasks_count": 1,
+    "training_tasks_count": 0,
+    "min_real_tasks_count": null,
+    "min_golden_tasks_count": 1,
+    "min_training_tasks_count": null,
+    "force_last_assignment": true,
+    "force_last_assignment_delay_seconds": 300,
+    "mix_tasks_in_creation_order": false,
+    "shuffle_tasks_in_task_suite": true,
+    "golden_task_distribution_function": null,
+    "training_task_distribution_function": null
+  },
+  "id": "256296",
   "owner": {
-    "id": "6d38ab84bee28c163f7f547902a8e6af",
+    "id": "b11341abe4e4a7dccb0123c56483b4c7",
     "myself": true
   },
   "type": "REGULAR",
   "status": "CLOSED",
-  "created": "2019-11-28T23:02:56.492"
+  "created": "2019-12-04T08:22:54.576"
 }

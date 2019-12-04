@@ -1,0 +1,126 @@
+{
+  "project_id": "29723",
+  "private_name": "Оценка параметров",
+  "may_contain_adult_content": false,
+  "will_expire": "2020-11-27T22:57:56.437",
+  "auto_close_after_complete_delay_seconds": 259200,
+  "reward_per_assignment": 0.01,
+  "assignment_max_duration_seconds": 2400,
+  "auto_accept_solutions": true,
+  "defaults": {
+    "default_overlap_for_new_task_suites": 10,
+    "default_overlap_for_new_tasks": 10
+  },
+  "private_comment": "Оценка величины динамического перекрытия.",
+  "public_description": null,
+  "dynamic_pricing_config": {
+    "type": "SKILL",
+    "skill_id": "13826",
+    "intervals": [
+      {
+        "from": 0,
+        "to": 89,
+        "reward_per_assignment": 0.01
+      },
+      {
+        "from": 90,
+        "to": 94,
+        "reward_per_assignment": 0.02
+      },
+      {
+        "from": 95,
+        "to": 98,
+        "reward_per_assignment": 0.03
+      },
+      {
+        "from": 99,
+        "to": 100,
+        "reward_per_assignment": 0.1
+      }
+    ]
+  },
+  "priority": 5,
+  "filter": {
+    "and": [
+      {
+        "or": [
+          {
+            "category": "computed",
+            "key": "region_by_phone",
+            "operator": "IN",
+            "value": 225
+          },
+          {
+            "category": "computed",
+            "key": "region_by_phone",
+            "operator": "IN",
+            "value": 187
+          },
+          {
+            "category": "computed",
+            "key": "region_by_phone",
+            "operator": "IN",
+            "value": 149
+          },
+          {
+            "category": "computed",
+            "key": "region_by_phone",
+            "operator": "IN",
+            "value": 159
+          }
+        ]
+      },
+      {
+        "or": [
+          {
+            "category": "computed",
+            "key": "client_type",
+            "operator": "EQ",
+            "value": "BROWSER"
+          }
+        ]
+      },
+      {
+        "or": [
+          {
+            "category": "profile",
+            "key": "languages",
+            "operator": "IN",
+            "value": "RU"
+          }
+        ]
+      },
+      {
+        "or": [
+          {
+            "category": "skill",
+            "key": "13825",
+            "operator": "GTE",
+            "value": "80"
+          }
+        ]
+      }
+    ]
+  },
+  "quality_control": {
+    "training_requirement": {
+      "training_pool_id": "8822978",
+      "training_passing_skill_value": 75
+    },
+    "captcha_frequency": "LOW",
+    "configs": null,
+    "checkpoints_config": null
+  },
+  "dynamic_overlap_config": null,
+  "mixer_config": {
+    "real_tasks_count": 140,
+    "golden_tasks_count": 10,
+    "training_tasks_count": 0,
+    "min_real_tasks_count": 0,
+    "min_golden_tasks_count": 10,
+    "min_training_tasks_count": 0,
+    "force_last_assignment": true,
+    "mix_tasks_in_creation_order": false,
+    "shuffle_tasks_in_task_suite": true
+  }
+}

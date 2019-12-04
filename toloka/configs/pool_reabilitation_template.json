@@ -1,8 +1,8 @@
 {
-  "project_id": "29723",
-  "private_name": "Экзамен",
+  "project_id": "21500",
+  "private_name": "Реабилитация",
   "may_contain_adult_content": false,
-  "will_expire": "2020-11-27T22:57:56.437",
+  "will_expire": "2020-11-17T16:42:47.023",
   "auto_close_after_complete_delay_seconds": 259200,
   "reward_per_assignment": 0.01,
   "assignment_max_duration_seconds": 2400,
@@ -11,13 +11,10 @@
     "default_overlap_for_new_task_suites": 1,
     "default_overlap_for_new_tasks": null
   },
-  "private_comment": "Экзаменационный пул",
+  "private_comment": "Реабилитационный пул.",
   "public_description": null,
   "dynamic_pricing_config": null,
-  "assignments_issuing_config": {
-    "issue_task_suites_in_creation_order": false
-  },
-  "priority": 0,
+  "priority": 20,
   "filter": {
     "and": [
       {
@@ -67,6 +64,26 @@
             "value": "RU"
           }
         ]
+      },
+      {
+        "or": [
+          {
+            "category": "skill",
+            "key": "13825",
+            "operator": "LT",
+            "value": "80"
+          }
+        ]
+      },
+      {
+        "or": [
+          {
+            "category": "skill",
+            "key": "13825",
+            "operator": "GTE",
+            "value": "72"
+          }
+        ]
       }
     ]
   },
@@ -87,56 +104,22 @@
               {
                 "key": "assignments_accepted_count",
                 "operator": "GTE",
-                "value": 1
+                "value": 2
               }
             ],
             "action": {
               "type": "RESTRICTION",
               "parameters": {
                 "scope": "POOL",
-                "private_comment": "Выполнил один набор заданий в экзамене.",
-                "duration_days": 15
-              }
-            }
-          }
-        ]
-      },
-      {
-        "collector_config": {
-          "type": "GOLDEN_SET",
-          "parameters": {
-            "history_size": 100
-          }
-        },
-        "rules": [
-          {
-            "conditions": [
-              {
-                "key": "golden_set_answers_count",
-                "operator": "GTE",
-                "value": 100
-              },
-              {
-                "key": "golden_set_correct_answers_rate",
-                "operator": "LT",
-                "value": 75.0
-              }
-            ],
-            "action":{
-              "type":"RESTRICTION",
-              "parameters":{
-                "scope":"PROJECT",
-                "duration_days":15,
-                "private_comment":"Не прошел экзамен"
+                "private_comment": "Выполнил два набора заданий в реабилитации.",
+                "duration_days": 2
               }
             }
           }
         ]
       }
-    ],
-    "checkpoints_config": null
+    ]
   },
-  "dynamic_overlap_config": null,
   "mixer_config": {
     "real_tasks_count": 0,
     "golden_tasks_count": 100,
