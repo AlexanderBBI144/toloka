@@ -5,6 +5,7 @@ from importlib.resources import read_text
 from types import SimpleNamespace
 from typing import Any, List, Dict
 
+import pandas as pd
 import simplejson as json
 from uuid import uuid4
 
@@ -50,10 +51,11 @@ class AssignmentData:
 class Assignment(Toloka):
     endpoint = '/assignments'
     data_class = AssignmentData
+    max_limit = 10000
 
     @classmethod
     async def list(cls, status=None, task_id=None, task_suite_id=None,
-                   pool_id=None, user_id=None, limit=None, sort=None,
+                   pool_id=None, user_id=None, limit=max_limit, sort='id',
                    id_gt=None, id_gte=None, id_lt=None, id_lte=None,
                    created_gt=None, created_gte=None,
                    created_lt=None, created_lte=None,
@@ -68,3 +70,53 @@ class Assignment(Toloka):
             submitted_gt=submitted_gt, submitted_gte=submitted_gte,
             submitted_lt=submitted_lt, submitted_lte=submitted_lte
         )
+
+    @classmethod
+    async def list_all(cls, status=None, task_id=None, task_suite_id=None,
+                       pool_id=None, user_id=None,
+                       created_gt=None, created_gte=None,
+                       created_lt=None, created_lte=None,
+                       submitted_gt=None, submitted_gte=None,
+                       submitted_lt=None, submitted_lte=None):
+        return await super(Assignment, cls).list_all(
+            status=status, task_id=task_id, task_suite_id=task_suite_id,
+            pool_id=pool_id, user_id=user_id,
+            created_gt=created_gt, created_gte=created_gte,
+            created_lt=created_lt, created_lte=created_lte,
+            submitted_gt=submitted_gt, submitted_gte=submitted_gte,
+            submitted_lt=submitted_lt, submitted_lte=submitted_lte
+        )
+
+
+async def get_results(pool_id, mode=None, status=None):
+    async with Toloka.init_session(mode) as session:
+        cols = ['Id', 'TaskSuiteId', 'PoolId', 'UserId', 'TaskId',
+                'EventId1', 'EventId2', 'Result', 'Doubt', 'Error']
+        rows = []
+        result = await Assignment.list_all(status=status, pool_id=pool_id)
+        for i in result:
+            for input_values, answer in zip(i['tasks'], i['solutions']):
+                rows.append((
+                    i['id'],
+                    i['task_suite_id'],
+                    i['pool_id'],
+                    i['user_id'],
+                    input_values['id'],
+                    int(input_values['input_values']['image_left'].split('.')[0]),
+                    int(input_values['input_values']['image_right'].split('.')[0]),
+                    answer['output_values']['result'],
+                    answer['output_values']['doubt'],
+                    answer['output_values']['error']
+                ))
+        return rows, cols
+
+
+def get_results_xlsx(path):
+    df = pd.read_excel(path)
+    return df.to_records(index=False).tolist(), df.columns.tolist()
+
+
+def calc_overlap(rows, cols):
+    df = pd.DataFrame.from_records(rows, columns=cols)
+    df['index'] = df[['EventId1', 'EventId2']].apply(lambda x: frozenset((x['EventId1'], x['EventId2'])), axis=1)
+    return df['index'].value_counts().sort_values()

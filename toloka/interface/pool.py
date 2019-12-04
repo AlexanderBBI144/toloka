@@ -94,7 +94,7 @@ class TaskDistributionFunction:
 @dataclass
 class TrainingRequirement:
     training_pool_id: str = None
-    training_passing_skill_value: str = None
+    training_passing_skill_value: int = None
 
 
 @dataclass_json
@@ -207,6 +207,14 @@ class Pool(Toloka):
     def __init__(self, id=None, pool_data=None, filename=None):
         super(Pool, self).__init__(id, pool_data, filename)
         self.id = self.__class__.pool_id if self.id is None else self.id
+
+    async def open(self):
+        url = Toloka.host + self.endpoint + f"/{self.id}/open"
+        print(await request(Toloka.session, 'post', url=url))
+
+    async def close(self):
+        url = Toloka.host + self.endpoint + f"/{self.id}/close"
+        print(await request(Toloka.session, 'post', url=url))
 
     @classmethod
     async def list(cls, status=None, project_id=None, limit=None, sort='-created',
