@@ -14,8 +14,9 @@ from toloka.interface.task import Task, TaskData
 from toloka.interface.operation import Operation
 
 
-SUBMITTED_GT = "2019-11-27T13:00:00"
-STATUS = "RUNNING"
+SUBMITTED_GT = "2019-12-01T13:00:00"
+STATUS = 'RUNNING'
+TYPE = "TASK.BATCH_CREATE"
 
 async def monitor_one_operation(id):
     with tqdm(desc=id, total=100, leave=True) as pbar:
@@ -25,13 +26,15 @@ async def monitor_one_operation(id):
             current_progress = operation['progress']
             pbar.update(current_progress - progress)
             progress = current_progress
+            if progress == 100:
+                break
             await asyncio.sleep(3)
 
 async def main():
     async with Toloka.init_session() as session:
-        operations = await Operation.list_operations(submitted_gt=SUBMITTED_GT, status=STATUS)
+        operations = await Operation.list(submitted_gt=SUBMITTED_GT, status=STATUS, type=TYPE)
         print('Current operations:')
-        await asyncio.gather(*[monitor_one_operation(x['id']) for x in operations['items']])
+        await asyncio.gather(*[monitor_one_operation(x['id']) for x in operations])
         print('\nAll operations have completed.')
 
 if __name__ == '__main__':
