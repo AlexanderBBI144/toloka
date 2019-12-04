@@ -15,4 +15,4 @@ def resize_all(path):
     for filename in tqdm(os.listdir(path)):
         resize_image(path + filename)
 
-resize_all('C:/Users/Somov.A/Desktop/Src/')
+# resize_all('C:/Users/Somov.A/Desktop/Src/')
