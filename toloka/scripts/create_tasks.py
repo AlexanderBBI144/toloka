@@ -25,20 +25,6 @@ TOP_LIMIT = 15
 async def main():
     query = read_text(queries, 'create_tasks.sql')
     res, cols = select(query, DATE_START, DATE_END, CAMERA, CONF, MIN_QUALITY, TOP_LIMIT)
-
-    InputValues = make_dataclass('InputValues', cols)
-
-    task = Task(data=[
-        TaskData(
-            input_values=InputValues(**dict(zip(cols, x))),
-            pool_id=Toloka.pool_id
-        )
-        for x in res
-    ])
-
-    async with Toloka.init_session() as session:
-        result = await task.create(async_mode=True, allow_defaults=True, skip_invalid_items=False, operation_id=str(uuid4()))
-        print(f"Operation id: {result['result']['id']}")
-
+    
 if __name__ == '__main__':
     asyncio.run(main())
